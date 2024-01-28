@@ -1,0 +1,32 @@
+extends layout
+
+block content
+    div#container(style="display: none;")
+        .table-responsive
+            table.table.table-striped.table-primary.table-sm.text-center(style="max-width: 400px; margin: 0 auto;")
+                thead
+                    tr
+                        th(scope='col' style="width: 50%;") Predicción
+                tbody
+    button#quiniela.btn.btn-warning(type='button') ¡Generar quiniela!
+    script(src="/socket.io/socket.io.js")
+    script.
+        const socket = io();
+        const btnGenerar = document.getElementById('quiniela');
+        const cuerpoTabla = document.querySelector('tbody');
+        const contenedorTabla = document.getElementById('container');
+        btnGenerar.addEventListener('click', () => {
+            socket.emit('quiniela', {});
+        });
+
+        socket.on('quiniela', datos => {
+            contenedorTabla.style.display = 'block';
+            cuerpoTabla.innerHTML = "";
+            datos.forEach(resultado => {
+                let fila = document.createElement('tr');
+                cuerpoTabla.appendChild(fila);
+                let celda = document.createElement('td');
+                celda.textContent = resultado;
+                fila.appendChild(celda);    
+            });        
+        });

@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  table.table.table-striped.table-success.w-25.mx
+    thead
+        tr
+            th(colspan='5', scope='col') Tabla del #{resultado[0]}
+    tbody
+      each item, index in resultado
+        tr
+            td.table-success=resultado[0]
+            td.table-success x
+            td.table-success= index + 1
+            td.table-success =
+            td.table-success=item
